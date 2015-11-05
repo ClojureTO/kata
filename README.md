@@ -70,6 +70,16 @@ This project has several [generators][] to help you create files.
 
 FIXME: steps to deploy
 
+## Tasks
+- [ ] CRUD rest interface
+- [ ] CRUD UI for users
+- [ ] auth implementation based on users
+- [ ] session management
+- ---------------------------------------
+- [ ] adding project setup - reagent
+- [ ] data model for voting and problems
+- [ ] UI repl in browser
+
 ## Legal
 
 Copyright © 2015 FIXME
