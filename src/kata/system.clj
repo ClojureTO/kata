@@ -5,19 +5,22 @@
             [duct.middleware.not-found :refer [wrap-not-found]]
             [meta-merge.core :refer [meta-merge]]
             [ring.component.jetty :refer [jetty-server]]
-            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]))
+            [ring.middleware.defaults :refer [wrap-defaults api-defaults]]
+            [kata.endpoint.main-view :refer [main-endpoint]]))
 
 (def base-config
   {:app {:middleware [[wrap-not-found :not-found]
                       [wrap-defaults :defaults]]
          :not-found  "Resource Not Found"
-         :defaults   (meta-merge api-defaults {})}})
+         :defaults   (meta-merge api-defaults {:static {:resources "kata/public"}})}})
 
 (defn new-system [config]
   (let [config (meta-merge base-config config)]
     (-> (component/system-map
          :app  (handler-component (:app config))
-         :http (jetty-server (:http config)))
+         :http (jetty-server (:http config))
+         :main-view (endpoint-component main-endpoint))
         (component/system-using
          {:http [:app]
-          :app  []}))))
+          :app  [:main-view]
+          :main-view []}))))
