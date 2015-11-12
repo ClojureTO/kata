@@ -1,85 +1,19 @@
 # kata
 
-FIXME: description
+FIXME
 
-## Developing
+## Prerequisites
 
-### Setup
+You will need [Leiningen][1] 2.0 or above installed.
 
-When you first clone this repository, run:
+[1]: https://github.com/technomancy/leiningen
 
-```sh
-lein setup
-```
+## Running
 
-This will create files for local configuration, and prep your system
-for the project.
+To start a web server for the application, run:
 
-### Environment
+    lein run
 
-To begin developing, start with a REPL.
-
-```sh
-lein repl
-```
-
-Run `go` to initiate and start the system.
-
-```clojure
-user=> (go)
-:started
-```
-
-By default this creates a web server at <http://localhost:3000>.
-
-When you make changes to your source files, use `reset` to reload any
-modified files and reset the server.
-
-```clojure
-user=> (reset)
-:reloading (...)
-:resumed
-```
-
-### Testing
-
-Testing is fastest through the REPL, as you avoid environment startup
-time.
-
-```clojure
-user=> (test)
-...
-```
-
-But you can also run tests through Leiningen.
-
-```sh
-lein test
-```
-
-### Generators
-
-This project has several [generators][] to help you create files.
-
-* `lein gen endpoint <name>` to create a new endpoint
-* `lein gen component <name>` to create a new component
-
-[generators]: https://github.com/weavejester/lein-generate
-
-## Deploying
-
-FIXME: steps to deploy
-
-## Tasks
-- [ ] CRUD rest interface
-- [ ] CRUD UI for users
-- [ ] auth implementation based on users
-- [ ] session management
-- ---------------------------------------
-- [ ] adding project setup - reagent
-- [ ] data model for voting and problems
-- [ ] UI repl in browser
-
-## Legal
+## License
 
 Copyright © 2015 FIXME
