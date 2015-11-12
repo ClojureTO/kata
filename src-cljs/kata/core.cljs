@@ -5,7 +5,8 @@
             [goog.events :as events]
             [goog.history.EventType :as EventType]
             [markdown.core :refer [md->html]]
-            [ajax.core :refer [GET POST]])
+            [ajax.core :refer [GET POST]]
+            [kata.pages.problem-editor :as editor])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -34,7 +35,6 @@
         [:div.navbar-collapse.collapse
          (when-not @collapsed? {:class "in"})
          [:ul.nav.navbar-nav
-          [nav-link "#/" "Home" :home collapsed?]
           [nav-link "#/about" "About" :about collapsed?]]]]])))
 
 (defn about-page []
@@ -45,18 +45,8 @@
 
 (defn home-page []
   [:div.container
-   [:div.jumbotron
-    [:h1 "Welcome to kata"]
-    [:p "Time to start building your site!"]
-    [:p [:a.btn.btn-primary.btn-lg {:href "http://luminusweb.net"} "Learn more »"]]]
    [:div.row
-    [:div.col-md-12
-     [:h2 "Welcome to ClojureScript"]]]
-   (when-let [docs (session/get :docs)]
-     [:div.row
-      [:div.col-md-12
-       [:div {:dangerouslySetInnerHTML
-              {:__html (md->html docs)}}]]])])
+    [editor/editor-page]]])
 
 (def pages
   {:home #'home-page
