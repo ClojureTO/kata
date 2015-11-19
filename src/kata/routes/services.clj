@@ -15,8 +15,13 @@
   ;JSON docs available at the /swagger.json route
   (swagger-docs
     {:info {:title "Sample api"}})
+
   (context* "/api" []
-            :tags ["thingie"]
+            (POST* "/eval" []
+              :tags ["eval"]
+              :return String
+              :body-params [expr :- String]
+              (ok expr))
 
             (GET* "/plus" []
                   :return       Long
