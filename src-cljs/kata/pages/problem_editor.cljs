@@ -10,7 +10,6 @@
   (reagent/create-class
     {:render (fn []
                [:pre>code.clj
-                #_(with-out-str (pprint output))
                 @output])
      :component-did-update render-code
      :component-did-mount render-code}))
