@@ -10,3 +10,4 @@ profiles.clj
 /.env
 *.log
 /.idea
+.nrepl-port
