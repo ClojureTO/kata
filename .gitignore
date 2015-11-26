@@ -11,4 +11,5 @@ pom.xml
 profiles.clj
 /.env
 *.log
-kata.iml
+/.idea
+.nrepl-port

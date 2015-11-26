@@ -1,6 +1,7 @@
 (ns kata.routes.services
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
+            [kata.sandbox :refer [sandboxed-eval]]
             [schema.core :as s]))
 
 (s/defschema Thingie {:id Long
@@ -15,8 +16,13 @@
   ;JSON docs available at the /swagger.json route
   (swagger-docs
     {:info {:title "Sample api"}})
+
   (context* "/api" []
-            :tags ["thingie"]
+            (POST* "/evaluate" []
+              :tags ["eval"]
+              :return String
+              :body-params [expr :- String]
+              (ok (str (pr-str (second (:result (sandboxed-eval expr)))))))
 
             (GET* "/plus" []
                   :return       Long

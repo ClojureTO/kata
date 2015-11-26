@@ -33,7 +33,8 @@
                  [cljs-ajax "0.5.1"]
                  [metosin/compojure-api "0.24.0"]
                  [metosin/ring-swagger-ui "2.1.3-2"]
-                 [org.immutant/web "2.1.1" :exclusions [ch.qos.logback/logback-classic]]]
+                 [org.immutant/web "2.1.1" :exclusions [ch.qos.logback/logback-classic]]
+                 [clojail "1.0.6"]]
 
   :min-lein-version "2.0.0"
   :uberjar-name "kata.jar"
@@ -52,14 +53,15 @@
    {:app
     {:source-paths ["src-cljs"]
      :compiler
-                   {:output-to "target/cljsbuild/public/js/app.js"
-                    :output-dir "target/cljsbuild/public/js/out"
-                    :externs ["react/externs/react.js"]
-                    :pretty-print true}}}}
+     {:output-to "target/cljsbuild/public/js/app.js"
+      :output-dir "target/cljsbuild/public/js/out"
+      :externs ["react/externs/react.js"]
+      :pretty-print true}}}}
 
   :profiles
   {:uberjar {:omit-source true
              :env {:production true}
+<<<<<<< ours
              :prep-tasks ["compile" ["cljsbuild" "once"]]
              :cljsbuild
                           {:builds
@@ -73,6 +75,7 @@
 
              :aot :all
              :source-paths ["env/prod/clj"]}
+
    :dev           [:project/dev :profiles/dev]
    :test          [:project/test :profiles/test]
    :project/dev  {:dependencies [[prone "0.8.2"]
