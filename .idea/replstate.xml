@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="ReplState" timestamp="1447886436266">{:repl-history {:ide [], :local [], :remote [&quot;(defroutes home-routes\n  (GET \&quot;/\&quot; [] (home-page))\n  (GET \&quot;/docs\&quot; [] (ok (-&gt; \&quot;docs/docs.md\&quot; io/resource slurp))))&quot; &quot;(ns kata.routes.home\n  (:require [kata.layout :as layout]\n            [compojure.core :refer [defroutes GET]]\n            [ring.util.http-response :refer [ok]]\n            [clojure.java.io :as io]))\n\n(defn home-page []\n  (layout/render \&quot;home.html\&quot;))\n\n(defroutes home-routes\n  (GET \&quot;/\&quot; [] (home-page))\n  (GET \&quot;/docs\&quot; [] (ok (-&gt; \&quot;docs/docs.md\&quot; io/resource slurp))))\n\n&quot; &quot;(println \&quot;hi\&quot;)&quot; &quot;(some-&gt; [] not-empty count )&quot; &quot;(some-&gt; [1 2 3] not-empty count )&quot;]}}</component>
-</project>
