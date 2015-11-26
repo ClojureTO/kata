@@ -19,7 +19,7 @@
   ""
   [input error result]
   (POST "/api/evaluate"
-        {:params        {:code @input}
+        {:params        {:expr @input}
          :handler       #(reset! result %)
          :error-handler #(reset! error %)}))
 
@@ -51,4 +51,4 @@
        [:div.row>div.col-md-12
         [editor input]
         [:div.row>div.col-md-12
-         [result-view input]]]])))
+         [result-view result]]]])))
