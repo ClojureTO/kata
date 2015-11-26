@@ -17,11 +17,11 @@
     {:info {:title "Sample api"}})
 
   (context* "/api" []
-            (POST* "/eval" []
+            (POST* "/evaluate" []
               :tags ["eval"]
               :return String
               :body-params [expr :- String]
-              (ok expr))
+              (ok (with-out-str (clojure.pprint/pprint (eval (read-string expr))))))
 
             (GET* "/plus" []
                   :return       Long
