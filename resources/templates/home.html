@@ -26,13 +26,7 @@
     <script type="text/javascript">
         var context = "{{servlet-context}}";
     </script>
-    {% if dev %}
-      {% script "/js/out/goog/base.js" %}
-      {% script "/js/app.js" %}
-      <script type="text/javascript">goog.require("kata.app");</script>
-    {% else %}
-      {% script "/js/app.js" %}
-    {% endif %}
+    {% script "/js/app.js" %}
   </body>
 </html>
 
