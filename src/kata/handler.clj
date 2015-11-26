@@ -8,7 +8,9 @@
             [taoensso.timbre :as timbre]
             [taoensso.timbre.appenders.3rd-party.rotor :as rotor]
             [selmer.parser :as parser]
-            [environ.core :refer [env]]))
+            [environ.core :refer [env]]
+            [kata.config :refer [defaults]]
+            [mount.core :as mount]))
 
 (defn init
   "init will be called once when
@@ -18,23 +20,20 @@
   []
 
   (timbre/merge-config!
-    {:level     (if (env :dev) :trace :info)
+    {:level     ((fnil keyword :info) (env :log-level))
      :appenders {:rotor (rotor/rotor-appender
-                          {:path "kata.log"
+                          {:path (or (env :log-path) "kata.log")
                            :max-size (* 512 1024)
                            :backlog 10})}})
-
-  (if (env :dev) (parser/cache-off!))
-  (timbre/info (str
-                 "\n-=[kata started successfully"
-                 (when (env :dev) " using the development profile")
-                 "]=-")))
+  (mount/start)
+  ((:init defaults)))
 
 (defn destroy
   "destroy will be called when your application
    shuts down, put any clean up code here"
   []
   (timbre/info "kata is shutting down...")
+  (mount/stop)
   (timbre/info "shutdown complete!"))
 
 (def app-routes
