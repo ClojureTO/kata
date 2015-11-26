@@ -3,6 +3,7 @@
 /classes
 /checkouts
 pom.xml
+*.iml
 *.jar
 *.class
 /.lein-*
