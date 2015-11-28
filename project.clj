@@ -38,7 +38,8 @@
 
   :min-lein-version "2.0.0"
   :uberjar-name "kata.jar"
-  :jvm-opts ["-server"]
+  ;; needed for evaluating code
+  :jvm-opts ["-server" "-Djava.security.policy=sandbox.policy"]
   :resource-paths ["resources" "target/cljsbuild"]
 
   :main kata.core
