@@ -24,7 +24,7 @@
                  [com.fzakaria/slf4j-timbre "0.2.1"]
                  [migratus "0.8.7"]
                  [conman "0.2.5"]
-                 [com.h2database/h2 "1.4.188"]
+                 [org.postgresql/postgresql "9.3-1102-jdbc41"]
                  [org.clojure/clojurescript "1.7.170" :scope "provided"]
                  [reagent "0.5.1"]
                  [reagent-forms "0.5.13"]
