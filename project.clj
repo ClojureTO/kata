@@ -56,7 +56,8 @@
      :compiler
                    {:output-to "target/cljsbuild/public/js/app.js"
                     :output-dir "target/cljsbuild/public/js/out"
-                    :externs ["react/externs/react.js"]
+                    :externs ["resources/externs.js"
+                              "react/externs/react.js"]
                     :pretty-print true}}}}
 
   :profiles
@@ -68,7 +69,7 @@
                            {:app
                             {:source-paths ["env/prod/cljs"]
                              :compiler
-                                           {:optimizations :advanced
+                                           {:optimizations :simple
                                             :pretty-print false
                                             :closure-warnings
                                                            {:externs-validation :off :non-standard-jsdoc :off}}}}}

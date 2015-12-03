@@ -3,7 +3,6 @@
             [taoensso.timbre :as timbre]
             [environ.core :refer [env]]
             [selmer.middleware :refer [wrap-error-page]]
-            [prone.middleware :refer [wrap-exceptions]]
             [ring.middleware.flash :refer [wrap-flash]]
             [immutant.web.middleware :refer [wrap-session]]
             [ring.middleware.reload :as reload]
