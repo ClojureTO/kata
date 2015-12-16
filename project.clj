@@ -22,6 +22,7 @@
                  [ring "1.4.0" :exclusions [ring/ring-jetty-adapter]]
                  [mount "0.1.4" :exclusions [ch.qos.logback/logback-classic]]
                  [migratus "0.8.7"]
+                 [org.postgresql/postgresql "9.3-1102-jdbc41"]
                  [conman "0.2.7"]
                  [com.h2database/h2 "1.4.188"]
                  [org.clojure/clojurescript "1.7.170" :scope "provided"]
