@@ -10,6 +10,8 @@
             [selmer.parser :as parser]
             [environ.core :refer [env]]
             [kata.db.core :as db]))
+            [kata.config :refer [defaults]]
+            [mount.core :as mount]))
 
 (defn init
   "init will be called once when
@@ -19,9 +21,9 @@
   []
 
   (timbre/merge-config!
-    {:level     (if (env :dev) :trace :info)
+    {:level     ((fnil keyword :info) (env :log-level))
      :appenders {:rotor (rotor/rotor-appender
-                          {:path "kata.log"
+                          {:path (or (env :log-path) "kata.log")
                            :max-size (* 512 1024)
                            :backlog 10})}})
 
@@ -30,7 +32,9 @@
   (timbre/info (str
                  "\n-=[kata started successfully"
                  (when (env :dev) " using the development profile")
-                 "]=-")))
+                 "]=-"))
+  (mount/start)
+  ((:init defaults)))
 
 (defn destroy
   "destroy will be called when your application
@@ -38,6 +42,7 @@
   []
   (timbre/info "kata is shutting down...")
   (db/disconnect!)
+  (mount/stop)
   (timbre/info "shutdown complete!"))
 
 (def app-routes

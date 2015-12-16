@@ -24,6 +24,7 @@
 - tests
 - * required
 - “test your problem” section/button/preview mode
+- submit button
 
 ### Problems Display
 - username
@@ -66,7 +67,6 @@
 - doesn't save problems that you solve
 - unintrusive reminder to sign in if you want your problem saved/posted
 
--
 # User standpoint
 
 ### users
@@ -82,6 +82,7 @@
 - log in via make an account/twitter/facebook/g+/github
 - able to solve problems without logging in but not saved in solutions posts/no pts
 - user api to see stats, potential for statistical data
+- ability to save snippets of code, scratchpad-esque
 
 ### moderaters
 - all user priviledges

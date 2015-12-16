@@ -2,7 +2,9 @@
 /lib
 /classes
 /checkouts
+/.idea/*
 pom.xml
+*.iml
 *.jar
 *.class
 /.lein-*
@@ -10,3 +12,5 @@ profiles.clj
 /.env
 *.log
 /.idea
+.nrepl-port
+
