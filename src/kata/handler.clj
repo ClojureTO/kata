@@ -9,7 +9,7 @@
             [taoensso.timbre.appenders.3rd-party.rotor :as rotor]
             [selmer.parser :as parser]
             [environ.core :refer [env]]
-            [kata.db.core :as db]))
+            [kata.db.core :as db]
             [kata.config :refer [defaults]]
             [mount.core :as mount]))
 
