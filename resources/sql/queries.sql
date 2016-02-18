@@ -19,3 +19,13 @@ WHERE id = :id
 -- delete a user given the id
 DELETE FROM users
 WHERE id = :id
+
+-- name: add-example!
+-- adds a new problem example
+INSERT INTO problems
+(title, description, code)
+VALUES (:title, :description, :code)
+
+-- name: get-examples
+-- fetches all the available examples
+SELECT * FROM problems

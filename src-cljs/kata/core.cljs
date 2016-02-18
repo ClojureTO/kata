@@ -6,7 +6,8 @@
             [goog.history.EventType :as EventType]
             [markdown.core :refer [md->html]]
             [ajax.core :refer [GET POST]]
-            [kata.pages.problem-editor :as editor])
+            [kata.pages.problem-editor :as editor]
+            [kata.pages.submit-problem :as submit-problem])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -41,7 +42,7 @@
   [:div.container
    [:div.row
     [:div.col-md-12
-     "this is the story of kata... work in progress"]]])
+     [submit-problem/submit-problem-page]]]])
 
 (defn home-page []
   [:div.container

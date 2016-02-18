@@ -2,13 +2,15 @@
   (:require [ring.util.http-response :refer :all]
             [compojure.api.sweet :refer :all]
             [kata.sandbox :refer [sandboxed-eval]]
-            [schema.core :as s]))
+            [schema.core :as s]
+            [kata.db.core :as db]))
 
-(s/defschema Thingie {:id Long
-                      :hot Boolean
-                      :tag (s/enum :kikka :kukka)
-                      :chief [{:name String
-                               :type #{{:id String}}}]})
+(s/defschema
+  Problem
+  {(s/optional-key :id) s/Num
+   :title String
+   :description String
+   :code String})
 
 (defapi service-routes
   (ring.swagger.ui/swagger-ui
@@ -18,62 +20,20 @@
     {:info {:title "Sample api"}})
 
   (context* "/api" []
+            ;;TODO should use buffered input stream to prevent running out of memory for huge inputs
+            (POST* "/add-example" []
+                   :return String
+                   :body-params [problem :- Problem]
+                   (db/add-example! problem)
+                   (ok "success"))
+
+            (GET* "/examples" []
+                  :description "list of example problems"
+                  :return [Problem]
+                  (ok (db/get-examples)))
+
             (POST* "/evaluate" []
               :tags ["eval"]
               :return String
               :body-params [expr :- String]
-              (ok (str (pr-str (second (:result (sandboxed-eval expr)))))))
-
-            (GET* "/plus" []
-                  :return       Long
-                  :query-params [x :- Long, {y :- Long 1}]
-                  :summary      "x+y with query-parameters. y defaults to 1."
-                  (ok (+ x y)))
-
-            (POST* "/minus" []
-                   :return      Long
-                   :body-params [x :- Long, y :- Long]
-                   :summary     "x-y with body-parameters."
-                   (ok (- x y)))
-
-            (GET* "/times/:x/:y" []
-                  :return      Long
-                  :path-params [x :- Long, y :- Long]
-                  :summary     "x*y with path-parameters"
-                  (ok (* x y)))
-
-            (POST* "/divide" []
-                   :return      Double
-                   :form-params [x :- Long, y :- Long]
-                   :summary     "x/y with form-parameters"
-                   (ok (/ x y)))
-
-            (GET* "/power" []
-                  :return      Long
-                  :header-params [x :- Long, y :- Long]
-                  :summary     "x^y with header-parameters"
-                  (ok (long (Math/pow x y))))
-
-            (PUT* "/echo" []
-                  :return   [{:hot Boolean}]
-                  :body     [body [{:hot Boolean}]]
-                  :summary  "echoes a vector of anonymous hotties"
-                  (ok body))
-
-            (POST* "/echo" []
-                   :return   (s/maybe Thingie)
-                   :body     [thingie (s/maybe Thingie)]
-                   :summary  "echoes a Thingie from json-body"
-                   (ok thingie)))
-
-  (context* "/context" []
-            :tags ["context*"]
-            :summary "summary inherited from context"
-            (context* "/:kikka" []
-                      :path-params [kikka :- s/Str]
-                      :query-params [kukka :- s/Str]
-                      (GET* "/:kakka" []
-                            :path-params [kakka :- s/Str]
-                            (ok {:kikka kikka
-                                 :kukka kukka
-                                 :kakka kakka})))))
+              (ok (str (pr-str (second (:result (sandboxed-eval expr)))))))))
