@@ -9,6 +9,10 @@ You will need [Leiningen][1] 2.0 or above installed.
 
 ## Running
 
+When running for the first time, you'll need to create a database by running the following command:
+
+    lein run migrate
+
 The application has two parts that have to be run independently.
 The Clojure side of the application is run using:
 
