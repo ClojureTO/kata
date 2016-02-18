@@ -13,3 +13,4 @@ solutions
 * type of solution (idiomatic, code golf, etc.)
 * rating
 
+take a look at [this](https://github.com/jaredly/tutorial-cljs) for inspiration
