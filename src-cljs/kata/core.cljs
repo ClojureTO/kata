@@ -7,7 +7,8 @@
             [markdown.core :refer [md->html]]
             [ajax.core :refer [GET POST]]
             [kata.pages.problem-editor :as editor]
-            [kata.pages.submit-problem :as submit-problem])
+            [kata.pages.submit-problem :as submit-problem]
+            [kata.pages.display-problems :as display-problems])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -36,7 +37,8 @@
         [:div.navbar-collapse.collapse
          (when-not @collapsed? {:class "in"})
          [:ul.nav.navbar-nav
-          [nav-link "#/about" "About" :about collapsed?]]]]])))
+          [nav-link "#/about" "About" :about collapsed?]
+          [nav-link "#/problems" "Problems" :problems collapsed?]]]]])))
 
 (defn about-page []
   [:div.container
@@ -49,9 +51,16 @@
    [:div.row
     [editor/editor-page]]])
 
+(defn problems-page []
+  [:div.container
+   [:div.row
+    [:div.col-md-12
+     [display-problems/display-problem-list]]]])
+
 (def pages
   {:home #'home-page
-   :about #'about-page})
+   :about #'about-page
+   :problems #'problems-page})
 
 (defn page []
   [(pages (session/get :page))])
@@ -65,6 +74,9 @@
 
 (secretary/defroute "/about" []
   (session/put! :page :about))
+
+(secretary/defroute "/problems" []
+                    (session/put! :page :problems))
 
 ;; -------------------------
 ;; History
