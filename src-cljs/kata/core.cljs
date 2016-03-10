@@ -72,6 +72,9 @@
 (secretary/defroute "/" []
   (session/put! :page :home))
 
+(secretary/defroute "/problem/:id" [id]
+                    (session/put! :page :problem))
+
 (secretary/defroute "/add-problem" []
   (session/put! :page :add-problem))
 
