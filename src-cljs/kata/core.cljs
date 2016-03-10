@@ -37,7 +37,7 @@
         [:div.navbar-collapse.collapse
          (when-not @collapsed? {:class "in"})
          [:ul.nav.navbar-nav
-          [nav-link "#/about" "About" :about collapsed?]
+          [nav-link "#/add-problem" "Add Problem" :add-problem collapsed?]
           [nav-link "#/problems" "Problems" :problems collapsed?]]]]])))
 
 (defn about-page []
@@ -59,7 +59,7 @@
 
 (def pages
   {:home #'home-page
-   :about #'about-page
+   :add-problem #'about-page
    :problems #'problems-page})
 
 (defn page []
@@ -72,8 +72,8 @@
 (secretary/defroute "/" []
   (session/put! :page :home))
 
-(secretary/defroute "/about" []
-  (session/put! :page :about))
+(secretary/defroute "/add-problem" []
+  (session/put! :page :add-problem))
 
 (secretary/defroute "/problems" []
                     (session/put! :page :problems))

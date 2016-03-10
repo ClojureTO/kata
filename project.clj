@@ -33,6 +33,7 @@
                  [org.clojure/core.async "0.2.374"]
                  [cljs-ajax "0.5.1"]
                  [clojail "1.0.6"]
+                 [re-com "0.8.0"]
                  [metosin/compojure-api "0.24.0"]
                  [metosin/ring-swagger-ui "2.1.3-2"]
                  [org.immutant/web "2.1.1" :exclusions [ch.qos.logback/logback-classic]]]
