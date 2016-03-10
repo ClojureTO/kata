@@ -28,7 +28,6 @@
                            :backlog 10})}})
 
   (if (env :dev) (parser/cache-off!))
-  (db/connect!)
   (timbre/info (str
                  "\n-=[kata started successfully"
                  (when (env :dev) " using the development profile")
@@ -41,7 +40,6 @@
    shuts down, put any clean up code here"
   []
   (timbre/info "kata is shutting down...")
-  (db/disconnect!)
   (mount/stop)
   (timbre/info "shutdown complete!"))
 
