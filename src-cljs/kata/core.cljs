@@ -8,7 +8,8 @@
             [ajax.core :refer [GET POST]]
             [kata.pages.problem-editor :as editor]
             [kata.pages.submit-problem :as submit-problem]
-            [kata.pages.display-problems :as display-problems])
+            [kata.pages.display-problems :as display-problems]
+            [kata.pages.about :as about])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]
@@ -38,29 +39,31 @@
          (when-not @collapsed? {:class "in"})
          [:ul.nav.navbar-nav
           [nav-link "#/add-problem" "Add Problem" :add-problem collapsed?]
-          [nav-link "#/problems" "Problems" :problems collapsed?]]]]])))
+          [nav-link "#/about" "About" :about collapsed?]]]]])))
+
+(defn home-page []
+  [:div.container
+   [:div.row
+    [editor/editor-page]
+    [display-problems/display-problem-list]]])
 
 (defn about-page []
   [:div.container
    [:div.row
     [:div.col-md-12
-     [submit-problem/submit-problem-page]]]])
+     [about/about-page]]]])
 
-(defn home-page []
-  [:div.container
-   [:div.row
-    [editor/editor-page]]])
-
-(defn problems-page []
+(defn add-problem []
   [:div.container
    [:div.row
     [:div.col-md-12
-     [display-problems/display-problem-list]]]])
+     [submit-problem/submit-problem-page]]]])
 
 (def pages
   {:home #'home-page
-   :add-problem #'about-page
-   :problems #'problems-page})
+   :about-page #'about-page
+   :add-problem #'add-problem
+   })
 
 (defn page []
   [(pages (session/get :page))])
@@ -75,8 +78,8 @@
 (secretary/defroute "/add-problem" []
   (session/put! :page :add-problem))
 
-(secretary/defroute "/problems" []
-                    (session/put! :page :problems))
+(secretary/defroute "/about" []
+  (session/put! :page :about-page))
 
 ;; -------------------------
 ;; History
