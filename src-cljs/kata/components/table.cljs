@@ -12,10 +12,7 @@
 
 (defn td [id title]
   [:td
-   {:on-click #(do
-                (println "loading problem" id)
-                (secretary/dispatch! (str "#/problem/" id)))}
-   title])
+   [:a {:href (str "#/problem/" id)} title]])
 
 (defn problem-link [{:keys [id title submitted difficulty submitted-by times-solved solved]}]
   [:tr.problem-link
