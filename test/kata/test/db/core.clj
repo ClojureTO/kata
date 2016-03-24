@@ -9,10 +9,11 @@
   :once
   (fn [f]
     (migrations/migrate ["migrate"])
+    (db/connect!)
     (f)))
 
 (deftest test-users
-  (jdbc/with-db-transaction [t-conn db/conn]
+  (jdbc/with-db-transaction [t-conn @db/conn]
     (jdbc/db-set-rollback-only! t-conn)
     (is (= 1 (db/create-user!
                {:id         "1"
