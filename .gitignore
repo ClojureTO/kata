@@ -16,3 +16,4 @@ profiles.clj
 #*#
 .#*
 *.db.mv.db
+*.db
