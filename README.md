@@ -9,6 +9,12 @@ You will need [Leiningen][1] 2.0 or above installed.
 
 ## Running
 
+Before you create the database, you need to create `profiles.clj` under your
+project root, and add your database connection strings:
+
+    {:profiles/dev  {:env {:database-url "jdbc:h2:./kata_dev.db"}}
+     :profiles/test {:env {:database-url "jdbc:h2:./kata_test.db"}}}
+
 When running for the first time, you'll need to create a database by running the following command:
 
     lein run migrate
@@ -48,6 +54,14 @@ To make a new dpeloyment, do
 ```bash
 git push heroku master
 ```
+
+## Troubleshoots
+
+When you run `lein figwheel` and you get something like:
+
+> Caused by: java.io.FileNotFoundException: Could not locate cljs/analyzer__init.class or cljs/analyzer.clj on classpath:
+
+try upgrade leiningen with `lein upgrade`.
 
 ## License
 
