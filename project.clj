@@ -97,11 +97,9 @@
 
                   :figwheel
                                 {:http-server-root "public"
-                                 :server-port 3449
                                  :nrepl-port 7002
                                  :nrepl-middleware ["cemerick.piggieback/wrap-cljs-repl"]
-                                 :css-dirs ["resources/public/css"]
-                                 :ring-handler kata.handler/app}
+                                 :css-dirs ["resources/public/css"]}
 
                   :source-paths ["env/dev/clj"]
                   :repl-options {:init-ns kata.core}

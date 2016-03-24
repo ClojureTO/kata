@@ -45,7 +45,7 @@
   ""
   [input result]
   (POST "/api/evaluate"
-        {:params  {:expr  (:code @input)}
+        {:params  {:expr (:code @input)}
          :handler #(reset! result %)
          ;:error-handler #(reset! error %)
          }))
