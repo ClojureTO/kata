@@ -13,4 +13,6 @@ profiles.clj
 *.log
 /.idea
 .nrepl-port
-
+#*#
+.#*
+*.db.mv.db
