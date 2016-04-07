@@ -8,7 +8,8 @@
             [ajax.core :refer [GET POST]]
             [kata.pages.problem-editor :as editor]
             [kata.pages.submit-problem :as submit-problem]
-            [kata.pages.display-problems :as display-problems])
+            [kata.pages.display-problems :as display-problems]
+            [kata.pages.about :as about])
   (:import goog.History))
 
 (defn nav-link [uri title page collapsed?]

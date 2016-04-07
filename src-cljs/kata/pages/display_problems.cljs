@@ -83,3 +83,4 @@
        [add-tag filters]
        [:div.row>div.col-md-12.problem-table
         [problem-table (apply-filters filters table-contents)]]])))
+

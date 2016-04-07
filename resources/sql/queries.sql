@@ -1,31 +1,10 @@
--- name: create-user!
--- creates a new user record
-INSERT INTO users
-(id, first_name, last_name, email, pass)
-VALUES (:id, :first_name, :last_name, :email, :pass)
-
--- name: update-user!
--- update an existing user record
-UPDATE users
-SET first_name = :first_name, last_name = :last_name, email = :email
-WHERE id = :id
-
--- name: get-user
--- retrieve a user given the id.
-SELECT * FROM users
-WHERE id = :id
-
--- name: delete-user!
--- delete a user given the id
-DELETE FROM users
-WHERE id = :id
-
--- name: add-example!
--- adds a new problem example
+-- :name add-example! :! :n
+-- :doc add an exmaple
 INSERT INTO problems
 (title, description, code)
 VALUES (:title, :description, :code)
 
--- name: get-examples
--- fetches all the available examples
+
+-- :name get-examples :? :*
+-- :doc get examples
 SELECT * FROM problems
