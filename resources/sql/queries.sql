@@ -1,9 +1,8 @@
 -- :name add-example! :! :n
 -- :doc add an exmaple
 INSERT INTO problems
-(title, description, code)
-VALUES (:title, :description, :code)
-
+(title, submitter, description, code)
+VALUES (:title, :submitter, :description, :code)
 
 -- :name get-examples :? :*
 -- :doc get examples

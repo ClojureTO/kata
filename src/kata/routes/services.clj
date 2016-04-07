@@ -10,7 +10,12 @@
   {(s/optional-key :id) s/Num
    :title String
    :description String
-   :code String})
+   :code String
+   :submitter String
+   (s/optional-key :difficulty) s/Num
+   (s/optional-key :solved) s/Bool
+   (s/optional-key :times_solved) s/Num
+   (s/optional-key :submitted) s/Inst})
 
 (defapi service-routes
   (ring.swagger.ui/swagger-ui
@@ -24,6 +29,7 @@
             (POST* "/add-example" []
                    :return String
                    :body-params [problem :- Problem]
+                   (print problem)
                    (db/add-example! problem)
                    (ok "success"))
 

@@ -62,6 +62,11 @@
          :placeholder "title"
          :value (:title @form-data)
          :on-change (save-input! form-data :title)}]
+       [:input.form-control
+        {:type :text
+         :placeholder "name"
+         :value (:submitter @form-data)
+         :on-change (save-input! form-data :submitter)}]
        [:textarea.form-control
         {:placeholder "description"
          :value (:description @form-data)
