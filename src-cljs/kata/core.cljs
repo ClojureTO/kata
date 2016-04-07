@@ -37,30 +37,32 @@
         [:div.navbar-collapse.collapse
          (when-not @collapsed? {:class "in"})
          [:ul.nav.navbar-nav
-          [nav-link "#/about" "About" :about collapsed?]
-          [nav-link "#/problems" "Problems" :problems collapsed?]]]]])))
+          [nav-link "#/add-problem" "Add Problem" :add-problem collapsed?]
+          [nav-link "#/about" "About" :about collapsed?]]]]])))
+
+(defn home-page []
+  [:div.container
+   [:div.row
+    [editor/editor-page]
+    [display-problems/display-problem-list]]])
 
 (defn about-page []
   [:div.container
    [:div.row
     [:div.col-md-12
-     [submit-problem/submit-problem-page]]]])
+     [about/about-page]]]])
 
-(defn home-page []
-  [:div.container
-   [:div.row
-    [editor/editor-page]]])
-
-(defn problems-page []
+(defn add-problem []
   [:div.container
    [:div.row
     [:div.col-md-12
-     [display-problems/display-problem-list]]]])
+     [submit-problem/submit-problem-page]]]])
 
 (def pages
   {:home #'home-page
-   :about #'about-page
-   :problems #'problems-page})
+   :about-page #'about-page
+   :add-problem #'add-problem
+   })
 
 (defn page []
   [(pages (session/get :page))])
@@ -72,11 +74,14 @@
 (secretary/defroute "/" []
   (session/put! :page :home))
 
-(secretary/defroute "/about" []
-  (session/put! :page :about))
+(secretary/defroute "/problem/:id" [id]
+                    (session/put! :page :home))
 
-(secretary/defroute "/problems" []
-                    (session/put! :page :problems))
+(secretary/defroute "/add-problem" []
+  (session/put! :page :add-problem))
+
+(secretary/defroute "/about" []
+  (session/put! :page :about-page))
 
 ;; -------------------------
 ;; History
