@@ -1,7 +1,5 @@
 (ns kata.components.table
-  (:require [reagent.core :as r]
-            [secretary.core :as secretary]
-            [kata.util :as util]))
+  (:require [reagent.core :as r]))
 
 (defn filter-problems [search-text problems]
   (filter
@@ -51,14 +49,13 @@
   (let [table-state (r/atom {:sort-key  :difficulty
                              :ascending true
                              :rows      problems})]
-    (fn []
-      [:table.table-striped.table
-       [:thead
-        [:tr
-         [header "Title" :title table-state]
-         [header "Submitted" :submitted table-state]
-         [header "Difficulty" :difficulty table-state]
-         [header "Submitted By" :submitted-by table-state]
-         [header "Times Solved" :times-solved table-state]
-         [header "Solved" :solved table-state]]]
-       [table-body (sorted-contents table-state)]])))
+    [:table.table-striped.table
+     [:thead
+      [:tr
+       [header "Title" :title table-state]
+       [header "Submitted" :submitted table-state]
+       [header "Difficulty" :difficulty table-state]
+       [header "Submitted By" :submitted-by table-state]
+       [header "Times Solved" :times-solved table-state]
+       [header "Solved" :solved table-state]]]
+     [table-body (sorted-contents table-state)]]))
