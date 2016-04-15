@@ -4,7 +4,7 @@ body {
     height: 100%;
     padding-top: 40px;
 }
-{% if cljs %}
+
 @-moz-keyframes three-quarters-loader {
     0% {
         -moz-transform: rotate(0deg);
@@ -55,4 +55,4 @@ body {
     width: 32px;
     height: 32px;
 }
-{% endif %}
+
