@@ -30,6 +30,7 @@
         [:a.navbar-brand {:href "#/"} "kata"]
         [:ul.nav.navbar-nav
          [nav-link "#/" "Home" :home collapsed?]
+         [nav-link "#/add-problem" "Add Problem" :add-problem collapsed?]
          [nav-link "#/about" "About" :about collapsed?]]]])))
 
 (defn home-page []
