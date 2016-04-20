@@ -6,10 +6,15 @@
   (fn [event]
     (swap! form-data assoc id (.. event -target -value))))
 
+(defn fields-present? [form-data fields]
+  (not-any? empty? (map @form-data fields)))
+
 (defn submit-problem [form-data result]
-  (POST "/api/add-example"
-        {:params {:problem @form-data}
-         :handler #(reset! result %)}))
+  (if-not (fields-present? form-data [:title :submitter :description])
+    (js/alert "Required field(s) are missing.")
+    (POST "/api/add-example"
+      {:params {:problem @form-data}
+       :handler #(reset! result %)})))
 
 (defn render-code [this]
   (->> this reagent/dom-node (.highlightBlock js/hljs)))
@@ -50,6 +55,29 @@
          ;:error-handler #(reset! error %)
          }))
 
+(defn text-field
+  ([form-data field-name]
+   (text-field form-data field-name (name field-name)))
+  ([form-data field-name label]
+   [:div.form-group
+    {:class (if (empty? (field-name @form-data)) "has-error")}
+    [:input.form-control
+     {:type :text
+      :placeholder label
+      :value (field-name @form-data)
+      :on-change (save-input! form-data field-name)}]]))
+
+(defn textarea
+  ([form-data field-name]
+   (textarea form-data field-name (name field-name)))
+  ([form-data field-name label]
+   [:div.form-group
+    {:class (if (empty? (field-name @form-data)) "has-error")}
+    [:textarea.form-control
+     {:placeholder label
+      :value (field-name @form-data)
+      :on-change (save-input! form-data field-name)}]]))
+
 (defn submit-problem-form []
   (let [form-data (reagent/atom {})
         result (reagent/atom {})
@@ -57,32 +85,24 @@
     (fn []
       [:div.row>div.col-md-12
        [:h2 "Submit a problem"]
-       [:input.form-control
-        {:type :text
-         :placeholder "title"
-         :value (:title @form-data)
-         :on-change (save-input! form-data :title)}]
-       [:input.form-control
-        {:type :text
-         :placeholder "name"
-         :value (:submitter @form-data)
-         :on-change (save-input! form-data :submitter)}]
-       [:textarea.form-control
-        {:placeholder "description"
-         :value (:description @form-data)
-         :on-change (save-input! form-data :description)}]
-       [:div.row>div.col-md-12
-          [editor form-data]]
+       (text-field form-data :title)
+       (text-field form-data :submitter "your name")
+       (textarea form-data :description)
+       [:div.form-group
+        [:div.row>div.col-md-12
+         [editor form-data]]]
        [:div.row
-        [:div.col-md-1>label "Result"]
-        [:div.col-md-11
-        [eval-view eval-result]]]
-       [:button.btn.btn-primary
-        {:on-click #(evaluate-code form-data eval-result)}
-        "evaluate"]
-       [:button.btn.btn-primary
-        {:on-click #(submit-problem form-data result)}
-        "submit"]
+        [:div.form-group
+         [:div.col-md-1>label "Result"]
+         [:div.col-md-11
+          [eval-view eval-result]]]]
+       [:div.form-group
+        [:button.btn.btn-primary
+         {:on-click #(evaluate-code form-data eval-result)}
+         "evaluate"]
+        [:button.btn.btn-primary
+         {:on-click #(submit-problem form-data result)}
+         "submit"]]
        (when-let [result @result]
          [:h2 result])])))
 
