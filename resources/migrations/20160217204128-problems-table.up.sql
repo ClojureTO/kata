@@ -16,4 +16,4 @@ INSERT INTO problems (title, submitter, description, code)
  values ('The 2nd Problem', 'Bob', 'Another description', '(* 2 2)');
 
 INSERT INTO problems (title, submitter, description, code)
- values ('The 3rd and final problem', 'Charles', 'No description for you!', '(print "hello"');
+ values ('The 3rd and final problem', 'Charles', 'No description for you!', '(print &quot;hello&quot;');
