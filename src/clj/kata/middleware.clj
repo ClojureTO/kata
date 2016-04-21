@@ -1,17 +1,14 @@
 (ns kata.middleware
   (:require [kata.layout :refer [*app-context* error-page]]
-            [taoensso.timbre :as timbre]
-            [environ.core :refer [env]]
-            [selmer.middleware :refer [wrap-error-page]]
+            [clojure.tools.logging :as log]
+            [kata.env :refer [defaults]]
+            [kata.config :refer [env]]
             [ring.middleware.flash :refer [wrap-flash]]
             [immutant.web.middleware :refer [wrap-session]]
-            [ring.middleware.reload :as reload]
             [ring.middleware.webjars :refer [wrap-webjars]]
             [ring.middleware.defaults :refer [site-defaults wrap-defaults]]
             [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [ring.middleware.format :refer [wrap-restful-format]]
-            [ring.middleware.anti-forgery :refer [wrap-anti-forgery]]
-            [kata.config :refer [defaults]])
+            [ring.middleware.format :refer [wrap-restful-format]])
   (:import [javax.servlet ServletContext]))
 
 (defn wrap-context [handler]
@@ -34,7 +31,7 @@
     (try
       (handler req)
       (catch Throwable t
-        (timbre/error t)
+        (log/error t)
         (error-page {:status 500
                      :title "Something very bad has happened!"
                      :message "We've dispatched a team of highly trained gnomes to take care of the problem."})))))
@@ -48,7 +45,13 @@
         :title "Invalid anti-forgery token"})}))
 
 (defn wrap-formats [handler]
-  (wrap-restful-format handler {:formats [:json-kw :transit-json :transit-msgpack]}))
+  (let [wrapped (wrap-restful-format
+                  handler
+                  {:formats [:json-kw :transit-json :transit-msgpack]})]
+    (fn [request]
+      ;; disable wrap-formats for websockets
+      ;; since they're not compatible with this middleware
+      ((if (:websocket? request) handler wrapped) request))))
 
 (defn wrap-base [handler]
   (-> ((:middleware defaults) handler)

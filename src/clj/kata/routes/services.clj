@@ -18,27 +18,27 @@
    (s/optional-key :submitted) s/Inst})
 
 (defapi service-routes
-  (ring.swagger.ui/swagger-ui
-   "/swagger-ui")
   ;JSON docs available at the /swagger.json route
-  (swagger-docs
-    {:info {:title "Sample api"}})
-
-  (context* "/api" []
+  {:swagger {:ui "/swagger-ui"
+             :spec "/swagger.json"
+             :data {:info {:version "1.0.0"
+                           :title "Kata API"
+                           :description "Kata Services"}}}}
+  (context "/api" []
             ;;TODO should use buffered input stream to prevent running out of memory for huge inputs
-            (POST* "/add-example" []
+            (POST "/add-example" []
                    :return String
                    :body-params [problem :- Problem]
                    (print problem)
                    (db/add-example! problem)
                    (ok "success"))
 
-            (GET* "/examples" []
+            (GET "/examples" []
                   :description "list of example problems"
                   :return [Problem]
                   (ok (db/get-examples)))
 
-            (POST* "/evaluate" []
+            (POST "/evaluate" []
               :tags ["eval"]
               :return String
               :body-params [expr :- String]

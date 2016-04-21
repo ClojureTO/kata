@@ -1,11 +1,11 @@
-(ns kata.config
+(ns kata.env
   (:require [selmer.parser :as parser]
-            [taoensso.timbre :as timbre]
+            [clojure.tools.logging :as log]
             [kata.dev-middleware :refer [wrap-dev]]))
 
 (def defaults
   {:init
    (fn []
      (parser/cache-off!)
-     (timbre/info "\n-=[kata started successfully using the development profile]=-"))
+     (log/info "\n-=[kata started successfully using the development profile]=-"))
    :middleware wrap-dev})

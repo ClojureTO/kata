@@ -3,8 +3,8 @@ body {
 	font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
     height: 100%;
     padding-top: 40px;
-    background-color: #f9f8ee;
 }
+{% if cljs %}
 @-moz-keyframes three-quarters-loader {
     0% {
         -moz-transform: rotate(0deg);
