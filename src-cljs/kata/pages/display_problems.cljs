@@ -4,7 +4,7 @@
             [kata.components.table :refer [problem-table]]))
 
 (def app-state (r/atom {:sort-val :title :ascending true}))
-(def table-contents (r/atom  (GET "/api/examples")))
+(def table-contents (r/atom nil))
 
 (defn update-sort-value [new-val]
   (if (= new-val (:sort-val @app-state))
@@ -26,6 +26,8 @@
 (defn apply-filters
   ""
   [filters table-contents]
+  (println "Filters " @filters)
+  (println "table-contents " table-contents)
   (println "applying filters..."
            (reduce
              (fn [table filter]
@@ -35,27 +37,6 @@
     (fn [table filter]
       (filter table))
     table-contents @filters))
-
-#_(defn table [table-contents]
-    [:table.table-striped.table
-     [:thead
-      [:tr
-       [:th {:on-click #(update-sort-value :title)} "Title"]
-       [:th {:on-click #(update-sort-value :submitted)} "Submitted"]
-       [:th {:on-click #(update-sort-value :difficulty)} "Difficulty"]
-       [:th {:on-click #(update-sort-value :submitted-by)} "Submitted By"]
-       [:th {:on-click #(update-sort-value :times-solved)} "Times Solved"]
-       [:th {:on-click #(update-sort-value :solved)} "Solved"]]]
-     [:tbody
-      (for [title (sorted-contents table-contents)]
-        ^{:key (:id title)}
-        [:tr
-         [:td (:title title)]
-         [:td (:submitted title)]
-         [:td (:difficulty title)]
-         [:td (:submitted-by title)]
-         [:td (:times-solved title)]
-         [:td (:solved title)]])]])
 
 (defn add-tag [filters]
   [:div
@@ -69,9 +50,15 @@
 (defn display-problem-list []
   (let [filters (r/atom [])
         filtered-table (r/atom [])]
-    (fn []
-      [:div.container
-       [:div.row>div.col-md-12>h1 "Problem List"]
-       #_[add-tag filters]
-       [:div.row>div.col-md-12.problem-table
-        [problem-table (apply-filters filters table-contents)]]])))
+    (r/create-class
+      {:component-did-mount
+       #(GET "/api/examples"
+             {:handler (fn [param] (reset! table-contents param))
+              :response-format :json
+              :keywords? true})
+       :reagent-render (fn []
+                         [:div.container
+                          [:div.row>div.col-md-12>h1 "Problem List"]
+                          #_[add-tag filters]
+                          [:div.row>div.col-md-12
+                           [problem-table (apply-filters filters @table-contents)]]])})))
