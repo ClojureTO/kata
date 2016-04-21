@@ -12,13 +12,13 @@
   [:td
    [:a {:href (str "#/problem/" id)} title]])
 
-(defn problem-link [{:keys [id title submitted difficulty submitted-by times-solved solved]}]
+(defn problem-link [{:keys [id title submitted difficulty submitter times_solved solved]}]
   [:tr.problem-link
    [td id title]
    [td id submitted]
    [td id difficulty]
-   [td id submitted-by]
-   [td id times-solved]
+   [td id submitter]
+   [td id times_solved]
    [td id
     (if solved [:i.fa.fa-check-square-o]
                [:i.fa.fa-square-o])]])
@@ -55,7 +55,7 @@
        [header "Title" :title table-state]
        [header "Submitted" :submitted table-state]
        [header "Difficulty" :difficulty table-state]
-       [header "Submitted By" :submitted-by table-state]
-       [header "Times Solved" :times-solved table-state]
+       [header "Submitted By" :submitter table-state]
+       [header "Times Solved" :times_solved table-state]
        [header "Solved" :solved table-state]]]
      [table-body (sorted-contents table-state)]]))
