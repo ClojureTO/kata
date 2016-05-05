@@ -1,6 +1,7 @@
 (ns kata.pages.submit-problem
   (:require [ajax.core :refer [GET POST]]
-            [reagent.core :as reagent]))
+            [reagent.core :as reagent]
+            [kata.components.editor :refer [editor]]))
 
 (defn save-input! [form-data id]
   (fn [event]
@@ -23,25 +24,6 @@
 
 (defn render-code [this]
   (->> this reagent/dom-node (.highlightBlock js/hljs)))
-
-(defn editor-did-mount [cm save-fn]
-  (fn [this]
-    (.on (reset! cm
-         (.fromTextArea  js/CodeMirror
-           (reagent/dom-node this)
-                     #js {:mode "clojure"
-                          :lineNumbers true})) "change" save-fn)))
-
-(defn editor [cm input]
-  (reagent/create-class
-    {:render (fn [] [:textarea.form-control
-                     {:placeholder "code"
-                      :value (:code @input)
-                      :on-change (save-input! input :code)
-                      :auto-complete "off"}])
-     :component-did-mount (editor-did-mount
-                            cm
-                            #(swap! input assoc :code (.getValue %)))}))
 
 (defn eval-view [output]
   (reagent/create-class
@@ -97,7 +79,7 @@
        (textarea form-data :description)
        [:div.form-group
         [:div.row>div.col-md-12
-         [editor cm form-data]]]
+         [editor cm form-data #(swap! form-data assoc :code (.getValue %))]]]
        [:div.row
         [:div.form-group
          [:div.col-md-1>label "Result"]
