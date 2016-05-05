@@ -9,25 +9,30 @@
 (defn fields-present? [form-data fields]
   (not-any? empty? (map @form-data fields)))
 
-(defn submit-problem [form-data result]
-  (if-not (fields-present? form-data [:title :submitter :description])
+(defn submit-problem [cm form-data result]
+  (if-not (fields-present? form-data [:title :submitter :description :code])
     (js/alert "Required field(s) are missing.")
     (POST "/api/add-example"
       {:params {:problem @form-data}
-       :handler #(reset! result %)})))
+       :handler #((reset! result %)
+                  (reset! form-data nil)
+                  (.setValue cm "")
+                  (.clearHistory cm)
+                  (.refresh cm)
+                  )})))
 
 (defn render-code [this]
   (->> this reagent/dom-node (.highlightBlock js/hljs)))
 
-(defn editor-did-mount [save-fn]
+(defn editor-did-mount [cm save-fn]
   (fn [this]
-    (let [cm (.fromTextArea  js/CodeMirror
-                             (reagent/dom-node this)
-                             #js {:mode "clojure"
-                                  :lineNumbers true})]
-      (.on cm "change" save-fn))))
+    (.on (reset! cm
+         (.fromTextArea  js/CodeMirror
+           (reagent/dom-node this)
+                     #js {:mode "clojure"
+                          :lineNumbers true})) "change" save-fn)))
 
-(defn editor [input]
+(defn editor [cm input]
   (reagent/create-class
     {:render (fn [] [:textarea.form-control
                      {:placeholder "code"
@@ -35,6 +40,7 @@
                       :on-change (save-input! input :code)
                       :auto-complete "off"}])
      :component-did-mount (editor-did-mount
+                            cm
                             #(swap! input assoc :code (.getValue %)))}))
 
 (defn eval-view [output]
@@ -81,7 +87,8 @@
 (defn submit-problem-form []
   (let [form-data (reagent/atom {})
         result (reagent/atom {})
-        eval-result (reagent/atom {})]
+        eval-result (reagent/atom {})
+        cm (atom nil)]
     (fn []
       [:div.row>div.col-md-12
        [:h2 "Submit a problem"]
@@ -90,7 +97,7 @@
        (textarea form-data :description)
        [:div.form-group
         [:div.row>div.col-md-12
-         [editor form-data]]]
+         [editor cm form-data]]]
        [:div.row
         [:div.form-group
          [:div.col-md-1>label "Result"]
@@ -101,7 +108,7 @@
          {:on-click #(evaluate-code form-data eval-result)}
          "evaluate"]
         [:button.btn.btn-primary
-         {:on-click #(submit-problem form-data result)}
+         {:on-click #(submit-problem @cm form-data result)}
          "submit"]]
        (when-let [result @result]
          [:h2 result])])))
