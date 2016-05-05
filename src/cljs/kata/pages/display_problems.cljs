@@ -26,9 +26,6 @@
 (defn apply-filters
   ""
   [filters table-contents]
-  #_(println "Filters " @filters)
-  #_(println "table-contents " table-contents)
-  ;(println "applying filters..."
   (reduce
     (fn [table filter]
       (filter table))
