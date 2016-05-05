@@ -16,7 +16,7 @@
   [:li.nav-item
    {:class (when (= page (session/get :page)) "active")}
    [:a.nav-link
-    {:href uri
+    {:href     uri
      :on-click #(reset! collapsed? true)} title]])
 
 (defn navbar []
@@ -51,11 +51,17 @@
     [:div.col-md-12
      [submit-problem/submit-problem-page]]]])
 
+(defn problem-editor []
+  [:div.container
+   [:div.row
+    [:div.col-md-12
+     ]]])
+
 (def pages
-  {:home #'home-page
-   :about-page #'about-page
-   :add-problem #'add-problem
-   })
+  {:home           #'home-page
+   :about-page     #'about-page
+   :add-problem    #'add-problem
+   :problem-editor #'problem-editor})
 
 (defn page []
   [(pages (session/get :page))])
@@ -65,27 +71,28 @@
 (secretary/set-config! :prefix "#")
 
 (secretary/defroute "/" []
-  (session/put! :page :home))
-
-(secretary/defroute "/problem/:id" [id]
                     (session/put! :page :home))
 
+(secretary/defroute "/problem/:id" [id]
+                    (session/put! :problem-id id)
+                    (session/put! :page :problem-editor))
+
 (secretary/defroute "/add-problem" []
-  (session/put! :page :add-problem))
+                    (session/put! :page :add-problem))
 
 (secretary/defroute "/about" []
-  (session/put! :page :about-page))
+                    (session/put! :page :about-page))
 
 ;; -------------------------
 ;; History
 ;; must be called after routes have been defined
 (defn hook-browser-navigation! []
   (doto (History.)
-        (events/listen
-          EventType/NAVIGATE
-          (fn [event]
-              (secretary/dispatch! (.-token event))))
-        (.setEnabled true)))
+    (events/listen
+      EventType/NAVIGATE
+      (fn [event]
+        (secretary/dispatch! (.-token event))))
+    (.setEnabled true)))
 
 ;; -------------------------
 ;; Initialize app

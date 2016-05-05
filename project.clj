@@ -34,7 +34,8 @@
                  [metosin/compojure-api "1.0.2"]
                  [luminus-log4j "0.1.3"]
                  [clojail "1.0.6"]
-                 [re-com "0.8.0"]]
+                 ;[re-com "0.8.0"]
+                 ]
 
   :min-lein-version "2.0.0"
 

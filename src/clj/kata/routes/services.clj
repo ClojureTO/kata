@@ -29,7 +29,7 @@
             (POST "/add-example" []
                    :return String
                    :body-params [problem :- Problem]
-                   (print problem)
+                  ;(print problem)
                    (db/add-example! problem)
                    (ok "success"))
 
@@ -37,6 +37,11 @@
                   :description "list of example problems"
                   :return [Problem]
                   (ok (db/get-examples)))
+
+           (GET "/examples/:id" [id]
+                :description "return a specific example problem"
+                :return Problem
+                (ok (db/get-example {:id id})))
 
             (POST "/evaluate" []
               :tags ["eval"]
