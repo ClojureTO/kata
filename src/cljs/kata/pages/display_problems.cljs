@@ -26,13 +26,11 @@
 (defn apply-filters
   ""
   [filters table-contents]
-  (println "Filters " @filters)
-  (println "table-contents " table-contents)
-  (println "applying filters..."
-           (reduce
-             (fn [table filter]
-               (filter table))
-             table-contents @filters))
+  (reduce
+    (fn [table filter]
+      (filter table))
+    table-contents @filters)
+  ;)
   (reduce
     (fn [table filter]
       (filter table))
