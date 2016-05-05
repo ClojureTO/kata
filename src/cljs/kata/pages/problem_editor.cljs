@@ -23,14 +23,6 @@
          :handler       #(reset! result %)
          :error-handler #(reset! error %)}))
 
-(defn editor-did-mount [input]
-  (fn [this]
-    (let [cm (.fromTextArea js/CodeMirror
-                            (reagent/dom-node this)
-                            #js {:mode        "clojure"
-                                 :lineNumbers true})]
-      (.on cm "change" #(reset! input (.getValue %))))))
-
 (defn editor-page
   "fun stuff"
   []
