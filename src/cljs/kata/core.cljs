@@ -34,28 +34,18 @@
          [nav-link "#/about" "About" :about collapsed?]]]])))
 
 (defn home-page []
-  [:div.container
-   [:div.row
-    [editor/editor-page]
-    [display-problems/display-problem-list]]])
+  [:div
+   [editor/editor-page]
+   [display-problems/display-problem-list]])
 
 (defn about-page []
-  [:div.container
-   [:div.row
-    [:div.col-md-12
-     [about/about-page]]]])
+  [about/about-page])
 
 (defn add-problem []
-  [:div.container
-   [:div.row
-    [:div.col-md-12
-     [submit-problem/submit-problem-page]]]])
+  [submit-problem/submit-problem-page])
 
 (defn problem-editor []
-  [:div.container
-   [:div.row
-    [:div.col-md-12
-     ]]])
+  [:div])
 
 (def pages
   {:home           #'home-page
@@ -64,7 +54,8 @@
    :problem-editor #'problem-editor})
 
 (defn page []
-  [(pages (session/get :page))])
+  [:div.container>div.row>div.col-md-12
+   [(pages (session/get :page))]])
 
 ;; -------------------------
 ;; Routes
