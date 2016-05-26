@@ -45,7 +45,7 @@
   [submit-problem/submit-problem-page])
 
 (defn problem-editor []
-  [:div])
+  [editor/problem-page])
 
 (def pages
   {:home           #'home-page
@@ -87,14 +87,10 @@
 
 ;; -------------------------
 ;; Initialize app
-(defn fetch-docs! []
-  (GET (str js/context "/docs") {:handler #(session/put! :docs %)}))
-
 (defn mount-components []
   (reagent/render [#'navbar] (.getElementById js/document "navbar"))
   (reagent/render [#'page] (.getElementById js/document "app")))
 
 (defn init! []
-  (fetch-docs!)
   (hook-browser-navigation!)
   (mount-components))
