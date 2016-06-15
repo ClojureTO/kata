@@ -3,6 +3,7 @@
 /classes
 /checkouts
 /.idea/*
+
 pom.xml
 *.iml
 *.jar
@@ -10,7 +11,7 @@ pom.xml
 /.lein-*
 profiles.clj
 /.env
-*.log
+*.log*
 /.idea
 .nrepl-port
 #*#
