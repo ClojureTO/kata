@@ -25,7 +25,7 @@
 
 (defn text-field
   ([form-data field-name]
-   (text-field form-data field-name (name field-name)))
+   [text-field form-data field-name (name field-name)])
   ([form-data field-name label]
    [:div.form-group
     {:class (if (empty? (field-name @form-data)) "has-error")}
@@ -37,7 +37,7 @@
 
 (defn textarea
   ([form-data field-name]
-   (textarea form-data field-name (name field-name)))
+   [textarea form-data field-name (name field-name)])
   ([form-data field-name label]
    [:div.form-group
     {:class (if (empty? (field-name @form-data)) "has-error")}
@@ -55,9 +55,9 @@
     (fn []
       [:div.row>div.col-md-12
        [:h2 "Submit a problem"]
-       (text-field form-data :title)
-       (text-field form-data :submitter "your name")
-       (textarea form-data :description)
+       [text-field form-data :title]
+       [text-field form-data :submitter "your name"]
+       [textarea form-data :description]
        [:div.form-group
         [:div.row>div.col-md-12
          [editor cm form-data #(swap! form-data assoc :code (.getValue %))]]]
