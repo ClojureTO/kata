@@ -34,6 +34,7 @@
                  [metosin/compojure-api "1.0.2"]
                  [luminus-log4j "0.1.3"]
                  [clojail "1.0.6"]
+                 [clj-oauth "1.5.4"]
                  ;[re-com "0.8.0"]
                  ]
 
