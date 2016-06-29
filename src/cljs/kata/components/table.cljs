@@ -1,5 +1,6 @@
 (ns kata.components.table
-  (:require [reagent.core :as r]))
+  (:require [reagent.core :as r]
+            [kata.util :as util]))
 
 (defn filter-problems [search-text problems]
   (filter
