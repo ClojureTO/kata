@@ -97,6 +97,7 @@
                                  [lein-figwheel "0.5.2"]
                                  [lein-doo "0.1.6"]
                                  [org.clojure/clojurescript "1.8.40"]]
+                  :env {:protocol "http"}
 
                    :cljsbuild
                    {:builds
