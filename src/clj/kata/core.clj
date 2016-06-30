@@ -46,16 +46,10 @@
                         :started)]
     (log/info component "started"))
   (logger/init (:log-config env))
+  (migrations/migrate ["migrate"] (env :database-url))
   ((:init defaults))
   (.addShutdownHook (Runtime/getRuntime) (Thread. stop-app)))
 
 (defn -main [& args]
-  (cond
-    (some #{"migrate" "rollback"} args)
-    (do
-      (mount/start #'kata.config/env)
-      (migrations/migrate args (env :database-url))
-      (System/exit 0))
-    :else
-    (start-app args)))
-  
+  (start-app args))
+

@@ -25,6 +25,7 @@
                  [luminus-migrations "0.1.0"]
                  [conman "0.4.9"]
                  [com.h2database/h2 "1.4.191"]
+                 [org.postgresql/postgresql "9.4-1206-jdbc4"]
                  [org.clojure/clojurescript "1.8.40" :scope "provided"]
                  [reagent "0.5.1"]
                  [reagent-forms "0.5.22"]
