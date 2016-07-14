@@ -36,6 +36,8 @@
                  [luminus-log4j "0.1.3"]
                  [clojail "1.0.6"]
                  [clj-oauth "1.5.4"]
+                 [cljsjs/highlight "8.4-0"]
+                 [cljsjs/codemirror "5.11.0-2"]
                  ;[re-com "0.8.0"]
                  ]
 
